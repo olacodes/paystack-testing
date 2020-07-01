@@ -21,8 +21,8 @@
       <div class="form-submit">
         <b-button type="submit is-primary" @click.prevent="payWithPaystack()">Pay</b-button>
       </div>
+      <script src="https://js.paystack.co/v1/inline.js" />
     </form>
-    <script src="https://js.paystack.co/v1/inline.js" />
   </div>
 </template>
 
