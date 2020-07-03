@@ -19,7 +19,9 @@
         <input type="text" v-model="lastname" />
       </div>
       <div class="form-submit">
-        <b-button type="submit is-primary" @click.prevent="payWithPaystack()">Pay</b-button>
+        <b-button type="submit is-primary" @click.prevent="payWithPaystack()"
+          >Pay</b-button
+        >
       </div>
       <script src="https://js.paystack.co/v1/inline.js" />
     </form>
@@ -27,27 +29,31 @@
 </template>
 
 <script>
+import { paystack } from "../utils/config.json";
 
 export default {
-  data (){
+  data() {
     return {
-      firstname: '',
-      lastname: '',
-      amount: '',
-      email: '',
-    }
+      firstname: "",
+      lastname: "",
+      amount: "",
+      email: "",
+      paystack: paystack
+    };
   },
   methods: {
     payWithPaystack() {
+      console.log(this.paystack.key);
+
       var handler = PaystackPop.setup({
-        key: "pk_test_dc39742a9d8ecd9f5d9117c011b8565734d0b15f", // Replace with your public key
+        key: this.paystack.key, // Replace with your public key
         email: this.email,
         amount: this.amount * 100, // the amount value is multiplied by 100 to convert to the lowest currency unit
         currency: "NGN", // Use GHS for Ghana Cedis or USD for US Dollars
         firstname: this.firstname,
         lastname: this.lastname,
-        reference: ''+Math.floor((Math.random() * 1000000000) + 1), // Replace with a reference you generated
-        
+        reference: "" + Math.floor(Math.random() * 1000000000 + 1), // Replace with a reference you generated
+
         callback: function(response) {
           //this happens after the payment is completed successfully
           var reference = response.reference;
@@ -63,16 +69,15 @@ export default {
       handler.openIframe();
     }
   }
-}
-
+};
 </script>
 
 <style scoped>
-.paystack-test{
+.paystack-test {
   font-size: 2rem;
   margin: 1rem 0;
 }
-.form-group{
+.form-group {
   margin: 1rem;
 }
 </style>
